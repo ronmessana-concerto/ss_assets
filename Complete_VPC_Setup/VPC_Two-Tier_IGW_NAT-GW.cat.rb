@@ -237,6 +237,35 @@ resource 'cluster_sg_rule_int_udp', type: 'security_group_rule' do
   } end
 end
 
+resource "sec_group_rule_ssh", type: "security_group_rule" do
+  name join(["SshRule-",last(split(@@deployment.href,"/"))])
+  description "Allow SSH access."
+  source_type "cidr_ips"
+  security_group @cluster_sg
+  protocol "tcp"
+  direction "ingress"
+  cidr_ips "0.0.0.0/0"
+  protocol_details do {
+    "start_port" => "22",
+    "end_port" => "22"
+  } end
+end
+
+resource "sec_group_rule_rdp", type: "security_group_rule" do
+  name join(["SshRule-",last(split(@@deployment.href,"/"))])
+  description "Allow RDP access."
+  source_type "cidr_ips"
+  security_group @cluster_sg
+  protocol "tcp"
+  direction "ingress"
+  cidr_ips "0.0.0.0/0"
+  protocol_details do {
+    "start_port" => "3389",
+    "end_port" => "3389"
+  } end
+end
+
+
 ### SSH Key ###
 resource "ssh_key", type: "ssh_key" do
   like @common_resources.ssh_key
