@@ -237,7 +237,7 @@ resource 'cluster_sg_rule_int_udp', type: 'security_group_rule' do
   } end
 end
 
-resource "sec_group_rule_ssh", type: "security_group_rule" do
+resource 'sec_group_rule_ssh', type: 'security_group_rule' do
   name join(["SshRule-",last(split(@@deployment.href,"/"))])
   description "Allow SSH access."
   source_type "cidr_ips"
@@ -251,7 +251,7 @@ resource "sec_group_rule_ssh", type: "security_group_rule" do
   } end
 end
 
-resource "sec_group_rule_rdp", type: "security_group_rule" do
+resource 'sec_group_rule_rdp', type: 'security_group_rule' do
   name join(["SshRule-",last(split(@@deployment.href,"/"))])
   description "Allow RDP access."
   source_type "cidr_ips"
