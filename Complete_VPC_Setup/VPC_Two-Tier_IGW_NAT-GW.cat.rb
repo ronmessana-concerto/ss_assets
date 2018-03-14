@@ -343,7 +343,7 @@ operation "start" do
 end
 
 # Create the network and related components and NAT gateway and servers and this and that.
-define launch(@pub_server, @priv_servers, @vpc_network, @vpc_subnet, @vpc_priv_subnet, @vpc_igw, @vpc_nat_gw, @vpc_nat_ip, @vpc_route_table, @vpc_route, @vpc_priv_route_table, @cluster_sg, @cluster_sg_rule_int_tcp, @cluster_sg_rule_int_udp, @ssh_key, $param_location, $map_cloud, $map_config, $map_image_name_root) return @pub_server, @priv_servers, @vpc_network, @vpc_subnet, @vpc_priv_subnet, @vpc_igw, @vpc_nat_gw, @vpc_nat_ip, @vpc_route_table, @vpc_route, @vpc_priv_route_table, @cluster_sg, @cluster_sg_rule_int_tcp, @cluster_sg_rule_int_udp, @ssh_key do
+define launch(@pub_server, @priv_servers, @vpc_network, @vpc_subnet, @vpc_priv_subnet, @vpc_igw, @vpc_nat_gw, @vpc_nat_ip, @vpc_route_table, @vpc_route, @vpc_priv_route_table, @cluster_sg, @cluster_sg_rule_int_tcp,@sec_group_rule_ssh,@sec_group_rule_rdp, @cluster_sg_rule_int_udp, @ssh_key, $param_location, $map_cloud, $map_config, $map_image_name_root) return @pub_server, @priv_servers, @vpc_network, @vpc_subnet, @vpc_priv_subnet, @vpc_igw, @vpc_nat_gw, @vpc_nat_ip, @vpc_route_table, @vpc_route, @vpc_priv_route_table, @cluster_sg, @cluster_sg_rule_int_tcp,@sec_group_rule_ssh, @sec_group_rule_rdp @cluster_sg_rule_int_udp, @ssh_key do
 
   # provision networking
   provision(@vpc_network)
@@ -373,7 +373,8 @@ define launch(@pub_server, @priv_servers, @vpc_network, @vpc_subnet, @vpc_priv_s
     
   provision(@cluster_sg_rule_int_tcp)
   provision(@cluster_sg_rule_int_udp)
-  
+  provision(@sec_group_rule_ssh)
+  provision(@sec_group_rule_rdp)
   provision(@ssh_key)
 
   concurrent return @pub_server, @priv_servers do
